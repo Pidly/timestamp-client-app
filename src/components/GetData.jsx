@@ -10,6 +10,7 @@ function GetData() {
     }, [])
     return (
         <div>
+            <p>Data Info</p>
             <p>{data.unix}</p>
             <p>{data.date}</p>
         </div>
