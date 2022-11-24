@@ -4,7 +4,7 @@ function GetData() {
     const [data, setData] = useState({})
 
     useEffect(() => {
-        fetch("https://timestamp-server-production.up.railway.app/home")
+        fetch("/home")
         .then(res => res.json())
         .then(data => setData(data))
     }, [])
