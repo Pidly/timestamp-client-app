@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 
 function GetData() {
     const [data, setData] = useState({})
+    const baseUri = "https://timestamp-server-production.up.railway.app";
 
     useEffect(() => {
-        fetch("/home")
+        fetch(baseUri + "/home")
         .then(res => res.json())
         .then(data => setData(data))
     }, [])
