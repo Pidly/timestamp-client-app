@@ -1,42 +1,43 @@
-import { useState, useEffect } from 'react';
+import axios from 'axios';
+import React from "react";
+import { useState } from 'react';
 
 function GetData() {
     const [data, setData] = useState({});
-    const [epochData, setEpochData] = useState({});
+    const [index, setIndex] = useState({});
+    
     //app.get("/epoch", (req, res) => {
 
     const localUrl = "http://localhost:3001";
     const serverUrl = "https://timestamp-server-production.up.railway.app";
     const baseUri = localUrl;
 
-    useEffect(() => {
-        fetch(baseUri + "/home")
-        .then(res => res.json())
-        .then(data => setData(data))
-    }, []);
 
-    useEffect(() => {
-        console.log("Epoch use effect");
-        fetch(baseUri + "/epoch")
-        .then(res => res.json())
-        .then(epochData => setEpochData(epochData))
-    }, []);
+    const handleChange = () => {
+        console.log("Handle change");
+    }
+   function sendData() {
+        console.log("Sending data");
+        
+        const requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({url: 'http://www.google.com'})
+        };
+        axios.post('' + baseUri + '/api/shorturl', {body: JSON.stringify({url: data, index: parseInt(index)})})
+            .then(response => console.log(response));
+        
+    }
 
     return (
         <div>
-            <>
-                <h2>Input</h2>
-                <p>1453708800</p>
-                <p>2015-12-25</p>
-            </>
-            <div>
-                <h2>Output Date</h2>
-                <p>{data.unix}</p>
-                <p>{data.date}</p>
-                <h2>Output Epoch</h2>
-                <p>{epochData.unix}</p>
-                <p>{epochData.date}</p>
-            </div>
+            <p>Index</p>
+            <input value={index} onInput={e => setIndex(e.target.value)}></input>
+            <p>URL</p>
+            <input value={data} onInput={e => setData(e.target.value)}></input>
+            <button onClick={sendData}>
+                Button
+            </button>
         </div>
     );
 }
